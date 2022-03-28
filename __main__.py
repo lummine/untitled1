@@ -32,7 +32,6 @@ MonthNameDict = {
 
 def getDay(day):
     global year, month
-    popup = Tk()
     try:
         with open(f'{year},{month},{day}.csv', 'r') as f:
             events = f.readlines()
@@ -41,17 +40,19 @@ def getDay(day):
     except:
         print('no data found')
 
+    for i in root.grid_slaves():
+        i.destroy()
+
     for i in range(1,10):
-        a = Combobox(popup, width=8)
+        a = Combobox(width=8)
         a['values'] = ('event', 'task', 'reminder')
         a.grid(row=i, column=0)
-        Entry(popup).grid(row=i, column=1)
-        Entry(popup).grid(row=i, column=2)
+        Entry().grid(row=i, column=1)
+        Entry().grid(row=i, column=2)
 
-    popup.wm_title(f'{day} of {MonthNameDict[month]}, {year}')
-    Label(popup, text=day, ).grid(row=0, column=0, columnspan=3)
-    Button(popup, text="save", command=popup.destroy).grid(row=10, column=0, columnspan=3)
-    popup.mainloop()
+    
+    Label(text= f'{MonthNameDict[month]} {day}' ).grid(row=0, column=0, columnspan=3)
+    Button(text="save", command=DaysOfTheMonth).grid(row=10, column=0, columnspan=3)
 
 
 def lastMonth():
@@ -123,11 +124,11 @@ def DaysOfTheMonth():
 
     EndBlanksDict = {
         7 : (1,2,3,4,5,6),
-        6 : '',
-        5 : 6,
+        6 : ( ),
+        5 : (6, ),
         4 : (5,6),
         3 : (4,5,6),
-        2 : (3,4,5,6,),
+        2 : (3,4,5,6),
         1 : (2,3,4,5,6)
         }
 
@@ -142,7 +143,7 @@ def main():
     DaysOfTheMonth()
 
     root.title('Calender')
-    root.geometry()
+    root.geometry('700x400')
     root.mainloop()
 
 
