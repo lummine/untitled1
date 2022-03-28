@@ -1,10 +1,13 @@
 import logging
 from calendar import monthrange
-from tkinter import Button, Label, StringVar, Tk, Entry
+from tkinter import StringVar, Tk
 from datetime import date
-from tkinter.ttk import Combobox
+from tkinter.ttk import Combobox, Style, Entry, Button, Label, Frame
 
 root = Tk()
+style = Style()
+style.theme_use('default')
+Frame(root).grid(row=0, column=0, rowspan=7, columnspan=7)
 currentDay = str(date.today().day)
 currentMonth = int(date.today().month)
 currentYear = int(date.today().year)
@@ -16,10 +19,13 @@ labelDate = StringVar()
 def getDay(day):
     global year, month
     popup = Tk()
-    with open(f'{year},{month},{day}.csv', 'r') as f:
-        events = f.readlines()
-    for event in events:
-        print(f'{event}')
+    try:
+        with open(f'{year},{month},{day}.csv', 'r') as f:
+            events = f.readlines()
+        for event in events:
+            print(f'{event}')
+    except:
+        print('no data found')
 
     a = Combobox(popup, width=8)
     a['values'] = ('event', 'task', 'reminder')
@@ -27,40 +33,56 @@ def getDay(day):
     Entry(popup).grid(row=1, column=1)
     Entry(popup).grid(row=1, column=2)
 
-    Combobox(popup, width=8).grid(row=2, column=0)
+    a = Combobox(popup, width=8)
+    a['values'] = ('event', 'task', 'reminder')
+    a.grid(row=2, column=0)
     Entry(popup).grid(row=2, column=1)
     Entry(popup).grid(row=2, column=2)
 
-    Combobox(popup, width=8).grid(row=3, column=0)
+    a = Combobox(popup, width=8)
+    a['values'] = ('event', 'task', 'reminder')
+    a.grid(row=3, column=0)
     Entry(popup).grid(row=3, column=1)
     Entry(popup).grid(row=3, column=2)
 
-    Combobox(popup, width=8).grid(row=4, column=0)
+    a = Combobox(popup, width=8)
+    a['values'] = ('event', 'task', 'reminder')
+    a.grid(row=4, column=0)
     Entry(popup).grid(row=4, column=1)
     Entry(popup).grid(row=4, column=2)
 
-    Combobox(popup, width=8).grid(row=5, column=0)
+    a = Combobox(popup, width=8)
+    a['values'] = ('event', 'task', 'reminder')
+    a.grid(row=5, column=0)
     Entry(popup).grid(row=5, column=1)
     Entry(popup).grid(row=5, column=2)
 
-    Combobox(popup, width=8).grid(row=6, column=0)
+    a = Combobox(popup, width=8)
+    a['values'] = ('event', 'task', 'reminder')
+    a.grid(row=6, column=0)
     Entry(popup).grid(row=6, column=1)
     Entry(popup).grid(row=6, column=2)
 
-    Combobox(popup, width=8).grid(row=7, column=0)
+    a = Combobox(popup, width=8)
+    a['values'] = ('event', 'task', 'reminder')
+    a.grid(row=7, column=0)
     Entry(popup).grid(row=7, column=1)
     Entry(popup).grid(row=7, column=2)
 
-    Combobox(popup, width=8).grid(row=8, column=0)
+    a = Combobox(popup, width=8)
+    a['values'] = ('event', 'task', 'reminder')
+    a.grid(row=8, column=0)
     Entry(popup).grid(row=8, column=1)
     Entry(popup).grid(row=8, column=2)
 
-    Combobox(popup, width=8).grid(row=9, column=0)
+    a = Combobox(popup, width=8)
+    a['values'] = ('event', 'task', 'reminder')
+    a.grid(row=9, column=0)
     Entry(popup).grid(row=9, column=1)
     Entry(popup).grid(row=9, column=2)
 
     popup.wm_title(f'{day} of {getMonthName(month)}, {year}')
-    Label(popup, text=day,).grid(row=0, column=0, columnspan=3)
+    Label(popup, text=day, ).grid(row=0, column=0, columnspan=3)
     Button(popup, text="save", command=popup.destroy).grid(row=10, column=0, columnspan=3)
     popup.mainloop()
 
@@ -134,50 +156,50 @@ def DaysOfTheMonth():
     column = (-1 + int(date(year, month, 1).isoweekday()))
     List = root.grid_slaves()
     labelDate.set(f'{getMonthName(month)} {str(year)}')
-    Button(root, text='last month', height=1, width=12, command=lastMonth).grid(row=0, column=2)
-    Label(root, textvariable=labelDate, height=1, width=15).grid(row=0, column=3)
-    Button(root, text='next month', height=1, width=12, command=nextMonth).grid(row=0, column=4)
+    Button(root, text='last month', command=lastMonth).grid(row=0, column=2)
+    Label(root, textvariable=labelDate).grid(row=0, column=3)
+    Button(root, text='next month', command=nextMonth).grid(row=0, column=4)
 
-    Label(root, text='Sunday', height=3, width=15).grid(row=1, column=0)
-    Label(root, text='Monday', height=3, width=15).grid(row=1, column=1)
-    Label(root, text='Tuesday', height=3, width=15).grid(row=1, column=2)
-    Label(root, text='Wednesday', height=3, width=15).grid(row=1, column=3)
-    Label(root, text='Tuesday', height=3, width=15).grid(row=1, column=4)
-    Label(root, text='Friday', height=3, width=15).grid(row=1, column=5)
-    Label(root, text='Saturday', height=3, width=15).grid(row=1, column=6)
+    Label(root, text='Sunday').grid(row=1, column=0)
+    Label(root, text='Monday').grid(row=1, column=1)
+    Label(root, text='Tuesday').grid(row=1, column=2)
+    Label(root, text='Wednesday').grid(row=1, column=3)
+    Label(root, text='Tuesday').grid(row=1, column=4)
+    Label(root, text='Friday').grid(row=1, column=5)
+    Label(root, text='Saturday').grid(row=1, column=6)
 
     if int(date(year, month, 1).isoweekday()) == 1:
-        Button(text='', height=3, width=12).grid(row=2, column=0)
+        Button(text='', width=15).grid(row=2, column=0, ipady=15)
 
     elif int(date(year, month, 1).isoweekday()) == 2:
-        Button(text='', height=3, width=12).grid(row=2, column=0)
-        Button(text='', height=3, width=12).grid(row=2, column=1)
+        Button(text='', width=15).grid(row=2, column=0, ipady=15)
+        Button(text='', width=15).grid(row=2, column=1, ipady=15)
 
     elif int(date(year, month, 1).isoweekday()) == 3:
-        Button(text='', height=3, width=12).grid(row=2, column=0)
-        Button(text='', height=3, width=12).grid(row=2, column=1)
-        Button(text='', height=3, width=12).grid(row=2, column=2)
+        Button(text='', width=15).grid(row=2, column=0, ipady=15)
+        Button(text='', width=15).grid(row=2, column=1, ipady=15)
+        Button(text='', width=15).grid(row=2, column=2, ipady=15)
 
     elif int(date(year, month, 1).isoweekday()) == 4:
-        Button(text='', height=3, width=12).grid(row=2, column=0)
-        Button(text='', height=3, width=12).grid(row=2, column=1)
-        Button(text='', height=3, width=12).grid(row=2, column=2)
-        Button(text='', height=3, width=12).grid(row=2, column=3)
+        Button(text='', width=15).grid(row=2, column=0, ipady=15)
+        Button(text='', width=15).grid(row=2, column=1, ipady=15)
+        Button(text='', width=15).grid(row=2, column=2, ipady=15)
+        Button(text='', width=15).grid(row=2, column=3, ipady=15)
 
     elif int(date(year, month, 1).isoweekday()) == 5:
-        Button(text='', height=3, width=12).grid(row=2, column=0)
-        Button(text='', height=3, width=12).grid(row=2, column=1)
-        Button(text='', height=3, width=12).grid(row=2, column=2)
-        Button(text='', height=3, width=12).grid(row=2, column=3)
-        Button(text='', height=3, width=12).grid(row=2, column=4)
+        Button(text='', width=15).grid(row=2, column=0, ipady=15)
+        Button(text='', width=15).grid(row=2, column=1, ipady=15)
+        Button(text='', width=15).grid(row=2, column=2, ipady=15)
+        Button(text='', width=15).grid(row=2, column=3, ipady=15)
+        Button(text='', width=15).grid(row=2, column=4, ipady=15)
 
     elif int(date(year, month, 1).isoweekday()) == 6:
-        Button(text='', height=3, width=12).grid(row=2, column=0)
-        Button(text='', height=3, width=12).grid(row=2, column=1)
-        Button(text='', height=3, width=12).grid(row=2, column=2)
-        Button(text='', height=3, width=12).grid(row=2, column=3)
-        Button(text='', height=3, width=12).grid(row=2, column=4)
-        Button(text='', height=3, width=12).grid(row=2, column=5)
+        Button(text='', width=15).grid(row=2, column=0, ipady=15)
+        Button(text='', width=15).grid(row=2, column=1, ipady=15)
+        Button(text='', width=15).grid(row=2, column=2, ipady=15)
+        Button(text='', width=15).grid(row=2, column=3, ipady=15)
+        Button(text='', width=15).grid(row=2, column=4, ipady=15)
+        Button(text='', width=15).grid(row=2, column=5, ipady=15)
 
     for i in List:
         i.destroy()
@@ -193,130 +215,130 @@ def DaysOfTheMonth():
 
         command.append(i)
         if i == 1:
-            Button(text=i, command=lambda: getDay(command[1]), height=3, width=12).grid(row=row, column=column)
+            Button(text=i, command=lambda: getDay(command[1]), width=15).grid(row=row, column=column, ipady=15)
 
         elif i == 2:
-            Button(text=i, command=lambda: getDay(command[2]), height=3, width=12).grid(row=row, column=column)
+            Button(text=i, command=lambda: getDay(command[2]), width=15).grid(row=row, column=column, ipady=15)
 
         elif i == 3:
-            Button(text=i, command=lambda: getDay(command[3]), height=3, width=12).grid(row=row, column=column)
+            Button(text=i, command=lambda: getDay(command[3]), width=15).grid(row=row, column=column, ipady=15)
 
         elif i == 4:
-            Button(text=i, command=lambda: getDay(command[4]), height=3, width=12).grid(row=row, column=column)
+            Button(text=i, command=lambda: getDay(command[4]), width=15).grid(row=row, column=column, ipady=15)
 
         elif i == 5:
-            Button(text=i, command=lambda: getDay(command[5]), height=3, width=12).grid(row=row, column=column)
+            Button(text=i, command=lambda: getDay(command[5]), width=15).grid(row=row, column=column, ipady=15)
 
         elif i == 6:
-            Button(text=i, command=lambda: getDay(command[6]), height=3, width=12).grid(row=row, column=column)
+            Button(text=i, command=lambda: getDay(command[6]), width=15).grid(row=row, column=column, ipady=15)
 
         elif i == 7:
-            Button(text=i, command=lambda: getDay(command[7]), height=3, width=12).grid(row=row, column=column)
+            Button(text=i, command=lambda: getDay(command[7]), width=15).grid(row=row, column=column, ipady=15)
 
         elif i == 8:
-            Button(text=i, command=lambda: getDay(command[8]), height=3, width=12).grid(row=row, column=column)
+            Button(text=i, command=lambda: getDay(command[8]), width=15).grid(row=row, column=column, ipady=15)
 
         elif i == 9:
-            Button(text=i, command=lambda: getDay(command[9]), height=3, width=12).grid(row=row, column=column)
+            Button(text=i, command=lambda: getDay(command[9]), width=15).grid(row=row, column=column, ipady=15)
 
         elif i == 10:
-            Button(text=i, command=lambda: getDay(command[10]), height=3, width=12).grid(row=row, column=column)
+            Button(text=i, command=lambda: getDay(command[10]), width=15).grid(row=row, column=column, ipady=15)
 
         elif i == 11:
-            Button(text=i, command=lambda: getDay(command[11]), height=3, width=12).grid(row=row, column=column)
+            Button(text=i, command=lambda: getDay(command[11]), width=15).grid(row=row, column=column, ipady=15)
 
         elif i == 12:
-            Button(text=i, command=lambda: getDay(command[12]), height=3, width=12).grid(row=row, column=column)
+            Button(text=i, command=lambda: getDay(command[12]), width=15).grid(row=row, column=column, ipady=15)
 
         elif i == 13:
-            Button(text=i, command=lambda: getDay(command[13]), height=3, width=12).grid(row=row, column=column)
+            Button(text=i, command=lambda: getDay(command[13]), width=15).grid(row=row, column=column, ipady=15)
 
         elif i == 14:
-            Button(text=i, command=lambda: getDay(command[14]), height=3, width=12).grid(row=row, column=column)
+            Button(text=i, command=lambda: getDay(command[14]), width=15).grid(row=row, column=column, ipady=15)
 
         elif i == 15:
-            Button(text=i, command=lambda: getDay(command[15]), height=3, width=12).grid(row=row, column=column)
+            Button(text=i, command=lambda: getDay(command[15]), width=15).grid(row=row, column=column, ipady=15)
 
         elif i == 16:
-            Button(text=i, command=lambda: getDay(command[16]), height=3, width=12).grid(row=row, column=column)
+            Button(text=i, command=lambda: getDay(command[16]), width=15).grid(row=row, column=column, ipady=15)
 
         elif i == 17:
-            Button(text=i, command=lambda: getDay(command[17]), height=3, width=12).grid(row=row, column=column)
+            Button(text=i, command=lambda: getDay(command[17]), width=15).grid(row=row, column=column, ipady=15)
 
         elif i == 18:
-            Button(text=i, command=lambda: getDay(command[18]), height=3, width=12).grid(row=row, column=column)
+            Button(text=i, command=lambda: getDay(command[18]), width=15).grid(row=row, column=column, ipady=15)
 
         elif i == 19:
-            Button(text=i, command=lambda: getDay(command[19]), height=3, width=12).grid(row=row, column=column)
+            Button(text=i, command=lambda: getDay(command[19]), width=15).grid(row=row, column=column, ipady=15)
 
         elif i == 20:
-            Button(text=i, command=lambda: getDay(command[20]), height=3, width=12).grid(row=row, column=column)
+            Button(text=i, command=lambda: getDay(command[20]), width=15).grid(row=row, column=column, ipady=15)
 
         elif i == 21:
-            Button(text=i, command=lambda: getDay(command[21]), height=3, width=12).grid(row=row, column=column)
+            Button(text=i, command=lambda: getDay(command[21]), width=15).grid(row=row, column=column, ipady=15)
 
         elif i == 22:
-            Button(text=i, command=lambda: getDay(command[22]), height=3, width=12).grid(row=row, column=column)
+            Button(text=i, command=lambda: getDay(command[22]), width=15).grid(row=row, column=column, ipady=15)
 
         elif i == 23:
-            Button(text=i, command=lambda: getDay(command[23]), height=3, width=12).grid(row=row, column=column)
+            Button(text=i, command=lambda: getDay(command[23]), width=15).grid(row=row, column=column, ipady=15)
 
         elif i == 24:
-            Button(text=i, command=lambda: getDay(command[24]), height=3, width=12).grid(row=row, column=column)
+            Button(text=i, command=lambda: getDay(command[24]), width=15).grid(row=row, column=column, ipady=15)
 
         elif i == 25:
-            Button(text=i, command=lambda: getDay(command[25]), height=3, width=12).grid(row=row, column=column)
+            Button(text=i, command=lambda: getDay(command[25]), width=15).grid(row=row, column=column, ipady=15)
 
         elif i == 26:
-            Button(text=i, command=lambda: getDay(command[26]), height=3, width=12).grid(row=row, column=column)
+            Button(text=i, command=lambda: getDay(command[26]), width=15).grid(row=row, column=column, ipady=15)
 
         elif i == 27:
-            Button(text=i, command=lambda: getDay(command[27]), height=3, width=12).grid(row=row, column=column)
+            Button(text=i, command=lambda: getDay(command[27]), width=15).grid(row=row, column=column, ipady=15)
 
         elif i == 28:
-            Button(text=i, command=lambda: getDay(command[28]), height=3, width=12).grid(row=row, column=column)
+            Button(text=i, command=lambda: getDay(command[28]), width=15).grid(row=row, column=column, ipady=15)
 
         elif i == 29:
-            Button(text=i, command=lambda: getDay(command[29]), height=3, width=12).grid(row=row, column=column)
+            Button(text=i, command=lambda: getDay(command[29]), width=15).grid(row=row, column=column, ipady=15)
 
         elif i == 30:
-            Button(text=i, command=lambda: getDay(command[30]), height=3, width=12).grid(row=row, column=column)
+            Button(text=i, command=lambda: getDay(command[30]), width=15).grid(row=row, column=column, ipady=15)
 
         else:
-            Button(text=i, command=lambda: getDay(command[31]), height=3, width=12).grid(row=row, column=column)
+            Button(text=i, command=lambda: getDay(command[31]), width=15).grid(row=row, column=column, ipady=15)
 
     if int(date(year, month, monthrange(year, month)[1]).isoweekday()) == 5:
-        Button(text='', height=3, width=12).grid(row=row, column=6)
+        Button(text='', width=15).grid(row=row, column=6, ipady=15)
 
     elif int(date(year, month, monthrange(year, month)[1]).isoweekday()) == 4:
-        Button(text='', height=3, width=12).grid(row=row, column=6)
-        Button(text='', height=3, width=12).grid(row=row, column=5)
+        Button(text='', width=15).grid(row=row, column=6, ipady=15)
+        Button(text='', width=15).grid(row=row, column=5, ipady=15)
 
     elif int(date(year, month, monthrange(year, month)[1]).isoweekday()) == 3:
-        Button(text='', height=3, width=12).grid(row=row, column=6)
-        Button(text='', height=3, width=12).grid(row=row, column=5)
-        Button(text='', height=3, width=12).grid(row=row, column=4)
+        Button(text='', width=15).grid(row=row, column=6, ipady=15)
+        Button(text='', width=15).grid(row=row, column=5, ipady=15)
+        Button(text='', width=15).grid(row=row, column=4, ipady=15)
 
     elif int(date(year, month, monthrange(year, month)[1]).isoweekday()) == 2:
-        Button(text='', height=3, width=12).grid(row=row, column=6)
-        Button(text='', height=3, width=12).grid(row=row, column=5)
-        Button(text='', height=3, width=12).grid(row=row, column=4)
-        Button(text='', height=3, width=12).grid(row=row, column=3)
+        Button(text='', width=15).grid(row=row, column=6, ipady=15)
+        Button(text='', width=15).grid(row=row, column=5, ipady=15)
+        Button(text='', width=15).grid(row=row, column=4, ipady=15)
+        Button(text='', width=15).grid(row=row, column=3, ipady=15)
 
     elif int(date(year, month, monthrange(year, month)[1]).isoweekday()) == 1:
-        Button(text='', height=3, width=12).grid(row=row, column=6)
-        Button(text='', height=3, width=12).grid(row=row, column=5)
-        Button(text='', height=3, width=12).grid(row=row, column=4)
-        Button(text='', height=3, width=12).grid(row=row, column=3)
-        Button(text='', height=3, width=12).grid(row=row, column=2)
+        Button(text='', width=15).grid(row=row, column=6, ipady=15)
+        Button(text='', width=15).grid(row=row, column=5, ipady=15)
+        Button(text='', width=15).grid(row=row, column=4, ipady=15)
+        Button(text='', width=15).grid(row=row, column=3, ipady=15)
+        Button(text='', width=15).grid(row=row, column=2, ipady=15)
 
     elif int(date(year, month, monthrange(year, month)[1]).isoweekday()) == 7:
-        Button(text='', height=3, width=12).grid(row=row, column=6)
-        Button(text='', height=3, width=12).grid(row=row, column=5)
-        Button(text='', height=3, width=12).grid(row=row, column=4)
-        Button(text='', height=3, width=12).grid(row=row, column=3)
-        Button(text='', height=3, width=12).grid(row=row, column=2)
-        Button(text='', height=3, width=12).grid(row=row, column=1)
+        Button(text='', width=15).grid(row=row, column=6, ipady=15)
+        Button(text='', width=15).grid(row=row, column=5, ipady=15)
+        Button(text='', width=15).grid(row=row, column=4, ipady=15)
+        Button(text='', width=15).grid(row=row, column=3, ipady=15)
+        Button(text='', width=15).grid(row=row, column=2, ipady=15)
+        Button(text='', width=15).grid(row=row, column=1, ipady=15)
 
 
 def main():
