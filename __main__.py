@@ -5,7 +5,8 @@ from tkinter.ttk import Combobox, Style, Entry, Button, Label, Frame, Separator
 
 root = Tk()
 style = Style()
-style.theme_use('default')
+root.tk.call("source", "proxttk-dark.tcl")
+style.theme_use("proxttk-dark")
 Frame(root).grid(row=0, column=0, rowspan=7, columnspan=7)
 currentDay = str(date.today().day)
 currentMonth = int(date.today().month)
@@ -41,8 +42,8 @@ def AddEntry(Day):
     Label(text='title', width=15).grid(row=1, column=0)
 
 
-    Button(text='save', width=30).grid(row=4, column=1)
-    Button(text='back', command=lambda:GetDay(Day), width=30).grid(row=4, column=2)
+    Button(text='save', width=30).grid(row=4, column=1, padx=5, pady=5)
+    Button(text='back', command=lambda:GetDay(Day), width=30).grid(row=4, column=2, padx=5, pady=5)
 
 
 def GetDay(Day):
@@ -100,9 +101,9 @@ def DaysOfTheMonth():
     for i in root.grid_slaves():
         i.destroy()
     labelDate.set(f'{MonthNameDict[month]} {str(year)}')
-    Button(root, text='last month', command=lastMonth).grid(row=0, column=2)
+    Button(root, text='last month', command=lastMonth).grid(row=0, column=2, padx=5, pady=5)
     Label(root, textvariable=labelDate).grid(row=0, column=3)
-    Button(root, text='next month', command=nextMonth).grid(row=0, column=4)
+    Button(root, text='next month', command=nextMonth).grid(row=0, column=4, padx=5, pady=5)
 
     DaysDict = {
         0 : 'Sunday',
@@ -120,7 +121,7 @@ def DaysOfTheMonth():
     for j in range(1,7):
         if int(date(year, month, 1).isoweekday()) == j:
             for i in range(0,j):
-                Button(text='', width=15).grid(row=2, column=i, ipady=20)
+                Button(text='', width=15).grid(row=2, column=i, ipady=20, padx=5, pady=5)
 
     row = 2
     for i in range(1, monthrange(year, month)[1] + 1):
@@ -130,7 +131,7 @@ def DaysOfTheMonth():
         else:
             column += 1
 
-        Button(text=i, command=lambda day=i: GetDay(day), width=15).grid(row=row, column=column, ipady=20)
+        Button(text=i, command=lambda day=i: GetDay(day), width=15).grid(row=row, column=column, ipady=20, padx=5, pady=5)
 
     EndBlanksDict = {
         7 : (1,2,3,4,5,6),
@@ -146,14 +147,14 @@ def DaysOfTheMonth():
     for j in range(1,8):
         if int(date(year, month, monthrange(year, month)[1]).isoweekday()) == j:
             for i in EndBlanksDict[j]:
-                Button(text='', width=15).grid(row=row, column=i, ipady=20)
+                Button(text='', width=15).grid(row=row, column=i, ipady=20, padx=5, pady=5)
 
 
 def main():
     DaysOfTheMonth()
 
     root.title('Calender')
-    root.geometry('700x500')
+    root.geometry('870x600')
     root.mainloop()
 
 
